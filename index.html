@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bai Global LLC - Air Duct Cleaning and Indoor Air Quality Solutions</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.9/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const NavBar = () => {
+            const [cart, setCart] = React.useState([]);
+            const [isBookingOpen, setIsBookingOpen] = React.useState(false);
+
+            const addToCart = (item) => {
+                setCart([...cart, item]);
+            };
+
+            return (
+                <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
+                    <div className="text-2xl font-bold">Bai Global LLC</div>
+                    <div className="flex space-x-4">
+                        {['Home', 'About', 'Store', 'Services', 'Reviews', 'Contact'].map((section) => (
+                            <a key={section} href={`#${section.toLowerCase()}`} className="hover:text-gray-300">{section}</a>
+                        ))}
+                    </div>
+                    <div className="flex space-x-4">
+                        <div className="relative">
+                            <button className="hover:text-gray-300">Cart ({cart.length})</button>
+                            {cart.length > 0 && (
+                                <div className="absolute bg-white text-black p-2 rounded shadow-lg">
+                                    {cart.map((item, index) => (
+                                        <div key={index}>{item.name} - ${item.price}</div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        <button onClick={() => setIsBookingOpen(true)} className="hover:text-gray-300">Book</button>
+                    </div>
+                    {isBookingOpen && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                            <div className="bg-white p-6 rounded shadow-lg">
+                                <h2 className="text-xl mb-4">Book an Appointment</h2>
+                                <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" />
+                                <input type="text" placeholder="Phone Number" className="border p-2 mb-2 w-full" />
+                                <textarea placeholder="Describe your issue" className="border p-2 mb-2 w-full"></textarea>
+                                <div className="flex justify-end space-x-2">
+                                    <button onClick={() => setIsBookingOpen(false)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                                    <button className="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        const Header = () => (
+            <div className="bg-blue-100 p-8 flex flex-col md:flex-row items-center">
+                <div className="md:w-1/2">
+                    <h1 className="text-4xl font-bold">Bai Global LLC</h1>
+                    <p className="text-xl mt-2">Breathe Easy with Cleaner Air</p>
+                </div>
+                <div className="md:w-1/2 mt-4 md:mt-0">
+                    <img src="https://via.placeholder.com/400x300?text=Air+Duct+Cleaning" alt="Air Duct Cleaning" className="w-full rounded" />
+                </div>
+            </div>
+        );
+
+        const About = () => (
+            <section id="about" className="p-8">
+                <h2 className="text-3xl font-bold mb-4">About Us</h2>
+                <p className="text-lg">
+                    Bai Global LLC has been providing top-notch air duct cleaning and indoor air quality solutions for over 5 years. 
+                    With more than 1000 satisfied clients, 90% of whom return to us and recommend our services to their friends and family, 
+                    we pride ourselves on delivering exceptional results and improving the air quality in homes and businesses.
+                </p>
+            </section>
+        );
+
+        const Services = () => (
+            <section id="services" className="p-8 bg-gray-100">
+                <h2 className="text-3xl font-bold mb-4">Our Services</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[
+                        { name: 'Air Duct Cleaning', desc: 'Remove dust, debris, and allergens from your air ducts for cleaner air.', img: 'https://via.placeholder.com/300x200?text=Air+Duct+Cleaning' },
+                        { name: 'Dryer Vent Cleaning', desc: 'Prevent fire hazards and improve dryer efficiency with professional vent cleaning.', img: 'https://via.placeholder.com/300x200?text=Dryer+Vent+Cleaning' },
+                        { name: 'HVAC Maintenance', desc: 'Keep your HVAC system running smoothly with regular maintenance.', img: 'https://via.placeholder.com/300x200?text=HVAC+Maintenance' },
+                        { name: 'Indoor Air Quality Testing', desc: 'Assess and improve the air quality in your home or office.', img: 'https://via.placeholder.com/300x200?text=Air+Quality+Testing' },
+                    ].map((service) => (
+                        <div key={service.name} className="bg-white p-4 rounded shadow">
+                            <img src={service.img} alt={service.name} className="w-full h-48 object-cover rounded" />
+                            <h3 className="text-xl font-bold mt-2">{service.name}</h3>
+                            <p>{service.desc}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const Store = () => {
+            const [cart, setCart] = React.useState([]);
+            const addToCart = (item) => {
+                setCart([...cart, item]);
+            };
+
+            const items = [
+                { name: 'Air Purifier', desc: 'High-efficiency air purifier for cleaner indoor air.', price: 199.99, img: 'https://via.placeholder.com/200?text=Air+Purifier' },
+                { name: 'HEPA Filter', desc: 'Replacement HEPA filter for air purifiers.', price: 49.99, img: 'https://via.placeholder.com/200?text=HEPA+Filter' },
+                { name: 'Vent Cleaning Kit', desc: 'DIY vent cleaning kit for home use.', price: 29.99, img: 'https://via.placeholder.com/200?text=Vent+Cleaning+Kit' },
+                { name: 'Air Quality Monitor', desc: 'Monitor indoor air quality in real-time.', price: 89.99, img: 'https://via.placeholder.com/200?text=Air+Quality+Monitor' },
+                { name: 'UV Air Sanitizer', desc: 'Eliminate airborne pathogens with UV technology.', price: 149.99, img: 'https://via.placeholder.com/200?text=UV+Air+Sanitizer' },
+                { name: 'Dehumidifier', desc: 'Reduce humidity and prevent mold growth.', price: 249.99, img: 'https://via.placeholder.com/200?text=Dehumidifier' },
+            ];
+
+            return (
+                <section id="store" className="p-8">
+                    <h2 className="text-3xl font-bold mb-4">Store</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {items.map((item) => (
+                            <div key={item.name} className="bg-white p-4 rounded shadow">
+                                <img src={item.img} alt={item.name} className="w-full h-48 object-cover rounded" />
+                                <h3 className="text-xl font-bold mt-2">{item.name}</h3>
+                                <p>{item.desc}</p>
+                                <p className="font-bold">${item.price}</p>
+                                <button onClick={() => addToCart(item)} className="bg-blue-500 text-white px-4 py-2 mt-2 rounded">Add to Cart</button>
+                            </div>
+                        ))}
+                    </div>
+                    {cart.length > 0 && (
+                        <div className="mt-8 p-4 bg-gray-100 rounded">
+                            <h3 className="text-xl font-bold">Checkout</h3>
+                            <input type="text" placeholder="Card Number" className="border p-2 mb-2 w-full" />
+                            <input type="text" placeholder="Expiration Date" className="border p-2 mb-2 w-full" />
+                            <input type="text" placeholder="CVV" className="border p-2 mb-2 w-full" />
+                            <button className="bg-green-500 text-white px-4 py-2 rounded">Pay Now</button>
+                        </div>
+                    )}
+                </section>
+            );
+        };
+
+        const Reviews = () => (
+            <section id="reviews" className="p-8 bg-gray-100">
+                <h2 className="text-3xl font-bold mb-4">Customer Reviews</h2>
+                <div className="space-y-4">
+                    {[
+                        { name: 'John Doe', review: 'Amazing service! My air ducts were cleaned thoroughly, and I noticed a huge difference in air quality.' },
+                        { name: 'Jane Smith', review: 'The team was professional and quick. Highly recommend their dryer vent cleaning!' },
+                        { name: 'Mike Johnson', review: 'Great experience with Bai Global LLC. My HVAC system is running better than ever.' },
+                        { name: 'Sarah Williams', review: 'Their air quality testing helped us identify issues we didn’t even know we had!' },
+                    ].map((review) => (
+                        <div key={review.name} className="bg-white p-4 rounded shadow">
+                            <p className="font-bold">{review.name}</p>
+                            <p>{review.review}</p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        );
+
+        const Contact = () => (
+            <section id="contact" className="p-8">
+                <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
+                <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/2">
+                        <p><strong>Address:</strong> 2159 Hart St, North Hollywood, CA 91605</p>
+                        <p><strong>Phone:</strong> (213) 876-3486</p>
+                    </div>
+                    <div className="md:w-1/2 mt-4 md:mt-0">
+                        <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" />
+                        <input type="text" placeholder="Phone Number" className="border p-2 mb-2 w-full" />
+                        <textarea placeholder="Message" className="border p-2 mb-2 w-full"></textarea>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="bg-gray-800 text-white p-4 text-center">
+                <div className="flex justify-center space-x-4">
+                    <a href="#privacy" className="hover:text-gray-300">Privacy Policy</a>
+                    <a href="#return" className="hover:text-gray-300">Return Policy</a>
+                    <a href="#terms" className="hover:text-gray-300">Terms and Conditions</a>
+                </div>
+                <p className="mt-2">&copy; 2025 Bai Global LLC. All rights reserved.</p>
+            </footer>
+        );
+
+        const App = () => (
+            <div>
+                <NavBar />
+                <Header />
+                <About />
+                <Services />
+                <Store />
+                <Reviews />
+                <Contact />
+                <Footer />
+            </div>
+        );
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
