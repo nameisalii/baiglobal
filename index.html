@@ -33,8 +33,10 @@
         .btn-primary {
             background-color: #1976d2;
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s;
         }
         .btn-primary:hover {
             background-color: #1565c0;
@@ -86,18 +88,86 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .contact-form {
-            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
         .contact-info {
             max-width: 500px;
             padding: 30px;
-            background: #e3f2fd;
+            background: #fff;
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form {
+            padding: 20px;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .policy-content {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .policy-content h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a2e5e;
+        }
+        .policy-content p {
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6;
+        }
+        .booking-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .booking-modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .booking-modal-content input,
+        .booking-modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .booking-modal-content textarea {
+            height: 100px;
+            resize: vertical;
         }
     </style>
 </head>
@@ -131,18 +201,18 @@
                                 </div>
                             )}
                         </div>
-                        <button onClick={() => setIsBookingOpen(true)} className="hover:text-gray-300">Book</button>
+                        <button onClick={() => setIsBookingOpen(true)} className="btn-primary">Book Now</button>
                     </div>
                     {isBookingOpen && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                            <div className="bg-white p-6 rounded shadow-lg">
-                                <h2 className="text-xl mb-4">Book an Appointment</h2>
+                        <div className="booking-modal">
+                            <div className="booking-modal-content">
+                                <h2 className="text-xl mb-4 font-bold text-gray-800">Book an Appointment</h2>
                                 <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" />
                                 <input type="text" placeholder="Phone Number" className="border p-2 mb-2 w-full" />
                                 <textarea placeholder="Describe your issue" className="border p-2 mb-2 w-full"></textarea>
                                 <div className="flex justify-end space-x-2">
                                     <button onClick={() => setIsBookingOpen(false)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
-                                    <button className="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                                    <button className="btn-primary">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -301,33 +371,74 @@
             </section>
         );
 
-        const Contact = () => (
-            <section id="contact" className="p-12 bg-gray-100">
-                <h2 className="text-5xl font-bold mb-8 text-gray-800 text-center">Reach Out to Us</h2>
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-                    <div className="contact-info">
-                        <p className="text-xl"><strong className="text-gray-800">Address:</strong> 2159 Hart St, North Hollywood, CA 91605</p>
-                        <p className="text-xl mt-4"><strong className="text-gray-800">Email:</strong> info@baiglobal.com</p>
-                        <p className="text-xl mt-4"><strong className="text-gray-800">Phone:</strong> (213) 876-3486</p>
+        const Contact = () => {
+            const [selectedPolicy, setSelectedPolicy] = React.useState(null);
+            const [isBookingOpen, setIsBookingOpen] = React.useState(false);
+
+            const policies = {
+                '/privacy': `
+                    ### Privacy Policy
+                    **Last Updated: July 10, 2025**
+                    At Bai Global LLC, we are committed to protecting your privacy. We collect personal information only to provide and improve our services. This includes your name, email, and contact details when you use our contact form or make a purchase. We do not share your information with third parties except as required by law or to fulfill service obligations. You can review or request deletion of your data by contacting us at info@baiglobal.com.
+                `,
+                '/return': `
+                    ### Return Policy
+                    **Last Updated: July 10, 2025**
+                    We offer a 30-day return policy for all products purchased from our store. Items must be unused, in their original packaging, and returned with proof of purchase. Refunds will be processed within 10 business days upon receipt of the returned item. Shipping costs are non-refundable. For more details, contact us at (213) 876-3486.
+                `,
+                '/terms': `
+                    ### Terms and Conditions
+                    **Last Updated: July 10, 2025**
+                    By using our website and services, you agree to these terms. This includes accepting our pricing, payment terms, and use of our content for personal use only. We reserve the right to modify these terms at any time. Disputes will be governed by the laws of California. For full details, reach out to us at info@baiglobal.com.
+                `
+            };
+
+            return (
+                <section id="contact" className="p-12 bg-gray-100">
+                    <h2 className="text-5xl font-bold mb-8 text-gray-800 text-center">Reach Out to Us</h2>
+                    <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8 justify-center">
+                        <div className="contact-form w-full md:w-1/2">
+                            <h3 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Get in Touch</h3>
+                            <input type="text" placeholder="Your Name" className="border p-2 mb-2 w-full" required />
+                            <input type="email" placeholder="Your Email" className="border p-2 mb-2 w-full" required />
+                            <textarea placeholder="How can we assist you?" className="border p-2 mb-2 w-full h-24" required></textarea>
+                            <button className="btn-primary w-full py-2">Send Message</button>
+                            <button onClick={() => setIsBookingOpen(true)} className="btn-primary w-full mt-4 py-2">Book Now</button>
+                        </div>
                     </div>
-                    <div className="contact-form md:w-1/2">
-                        <input type="text" placeholder="Name *" className="border p-3 mb-4 w-full text-lg" />
-                        <input type="text" placeholder="Email *" className="border p-3 mb-4 w-full text-lg" />
-                        <textarea placeholder="Message *" className="border p-3 mb-4 w-full h-40 text-lg"></textarea>
-                        <button className="btn-primary w-full py-3 text-lg">Send Message</button>
+                    <div className="max-w-7xl mx-auto mt-8 text-center">
+                        <p className="text-lg mb-2"><strong>Address:</strong> 2159 Hart St, North Hollywood, CA 91605</p>
+                        <p className="text-lg"><strong>Phone:</strong> <a href="tel:(213)876-3486" className="text-blue-500 hover:underline">(213) 876-3486</a></p>
                     </div>
-                </div>
-            </section>
-        );
+                    {isBookingOpen && (
+                        <div className="booking-modal">
+                            <div className="booking-modal-content">
+                                <h2 className="text-xl mb-4 font-bold text-gray-800">Book an Appointment</h2>
+                                <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" />
+                                <input type="text" placeholder="Phone Number" className="border p-2 mb-2 w-full" />
+                                <textarea placeholder="Describe your issue" className="border p-2 mb-2 w-full"></textarea>
+                                <div className="flex justify-end space-x-2">
+                                    <button onClick={() => setIsBookingOpen(false)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                                    <button className="btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    <div className="mt-8 text-center">
+                        <div className="flex justify-center space-x-6 mb-4">
+                            <a href="#" onClick={(e) => { e.preventDefault(); setSelectedPolicy('/privacy'); }} className="hover:text-gray-300 text-lg">Privacy Policy</a>
+                            <a href="#" onClick={(e) => { e.preventDefault(); setSelectedPolicy('/return'); }} className="hover:text-gray-300 text-lg">Return Policy</a>
+                            <a href="#" onClick={(e) => { e.preventDefault(); setSelectedPolicy('/terms'); }} className="hover:text-gray-300 text-lg">Terms and Conditions</a>
+                        </div>
+                        {selectedPolicy && <div className="policy-content" dangerouslySetInnerHTML={{ __html: policies[selectedPolicy].replace(/\n/g, '<br>') }} />}
+                    </div>
+                </section>
+            );
+        };
 
         const Footer = () => (
             <footer className="bg-gray-900 text-white p-6 text-center">
-                <div className="flex justify-center space-x-6">
-                    <a href="/privacy" className="hover:text-gray-300 text-lg">Privacy Policy</a>
-                    <a href="/return" className="hover:text-gray-300 text-lg">Return Policy</a>
-                    <a href="/terms" className="hover:text-gray-300 text-lg">Terms and Conditions</a>
-                </div>
-                <p className="mt-4 text-lg">© 2025 Bai Global LLC. All rights reserved.</p>
+                <p className="text-lg">© 2025 Bai Global LLC. All rights reserved.</p>
             </footer>
         );
 
