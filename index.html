@@ -8,6 +8,98 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.9/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #1a2e5e;
+            background-color: #f9f9f9;
+        }
+        .header-bg {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            padding: 40px 20px;
+        }
+        .service-bg {
+            background: #e3f2fd;
+            padding: 40px 20px;
+        }
+        .store-bg {
+            background: #f5f5f5;
+            padding: 40px 20px;
+        }
+        .review-bg {
+            background: #e8eaf6;
+            padding: 40px 20px;
+        }
+        .btn-primary {
+            background-color: #1976d2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #1565c0;
+        }
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .service-card .content {
+            padding: 20px;
+            color: #1a2e5e;
+        }
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .review-card img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .store-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .store-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .checkout {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form {
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .contact-info {
+            max-width: 500px;
+            padding: 30px;
+            background: #e3f2fd;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
     <div id="root"></div>
@@ -21,8 +113,8 @@
             };
 
             return (
-                <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
-                    <div className="text-2xl font-bold">Bai Global LLC</div>
+                <nav className="bg-gray-900 text-white p-4 flex justify-between items-center fixed w-full z-10">
+                    <div className="text-xl font-bold">Bai Global LLC</div>
                     <div className="flex space-x-4">
                         {['Home', 'About', 'Store', 'Services', 'Reviews', 'Contact'].map((section) => (
                             <a key={section} href={`#${section.toLowerCase()}`} className="hover:text-gray-300">{section}</a>
@@ -32,7 +124,7 @@
                         <div className="relative">
                             <button className="hover:text-gray-300">Cart ({cart.length})</button>
                             {cart.length > 0 && (
-                                <div className="absolute bg-white text-black p-2 rounded shadow-lg">
+                                <div className="absolute bg-white text-black p-2 rounded shadow-lg right-0 mt-2">
                                     {cart.map((item, index) => (
                                         <div key={index}>{item.name} - ${item.price}</div>
                                     ))}
@@ -60,21 +152,22 @@
         };
 
         const Header = () => (
-            <div className="bg-blue-100 p-8 flex flex-col md:flex-row items-center">
-                <div className="md:w-1/2">
-                    <h1 className="text-4xl font-bold">Bai Global LLC</h1>
-                    <p className="text-xl mt-2">Breathe Easy with Cleaner Air</p>
+            <div className="header-bg pt-20 flex flex-col md:flex-row items-center">
+                <div className="md:w-1/2 text-center md:text-left p-4">
+                    <h1 className="text-5xl font-bold text-gray-800">Air Duct Cleaning and Indoor Air Quality Solutions</h1>
+                    <p className="text-lg mt-4 text-gray-600">Transform your home's air quality with our expert air duct cleaning and innovative purification solutions. Enjoy fresh, clean air all year round.</p>
+                    <button className="btn-primary mt-4">Book Now</button>
                 </div>
                 <div className="md:w-1/2 mt-4 md:mt-0">
-                    <img src="https://via.placeholder.com/400x300?text=Air+Duct+Cleaning" alt="Air Duct Cleaning" className="w-full rounded" />
+                    <img src="https://via.placeholder.com/500x400?text=Air+Duct+Cleaning" alt="Air Duct Cleaning" className="w-full rounded shadow-lg" />
                 </div>
             </div>
         );
 
         const About = () => (
             <section id="about" className="p-8">
-                <h2 className="text-3xl font-bold mb-4">About Us</h2>
-                <p className="text-lg">
+                <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">About Us</h2>
+                <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
                     Bai Global LLC has been providing top-notch air duct cleaning and indoor air quality solutions for over 5 years. 
                     With more than 1000 satisfied clients, 90% of whom return to us and recommend our services to their friends and family, 
                     we pride ourselves on delivering exceptional results and improving the air quality in homes and businesses.
@@ -83,19 +176,21 @@
         );
 
         const Services = () => (
-            <section id="services" className="p-8 bg-gray-100">
-                <h2 className="text-3xl font-bold mb-4">Our Services</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <section id="services" className="service-bg">
+                <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">Our Services</h2>
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
-                        { name: 'Air Duct Cleaning', desc: 'Remove dust, debris, and allergens from your air ducts for cleaner air.', img: 'https://via.placeholder.com/300x200?text=Air+Duct+Cleaning' },
-                        { name: 'Dryer Vent Cleaning', desc: 'Prevent fire hazards and improve dryer efficiency with professional vent cleaning.', img: 'https://via.placeholder.com/300x200?text=Dryer+Vent+Cleaning' },
-                        { name: 'HVAC Maintenance', desc: 'Keep your HVAC system running smoothly with regular maintenance.', img: 'https://via.placeholder.com/300x200?text=HVAC+Maintenance' },
-                        { name: 'Indoor Air Quality Testing', desc: 'Assess and improve the air quality in your home or office.', img: 'https://via.placeholder.com/300x200?text=Air+Quality+Testing' },
+                        { name: 'Air Duct Cleaning', desc: 'Utilizing advanced equipment and techniques, we thoroughly clean your air ducts to remove dust, debris, and contaminants, promoting better airflow and reducing allergens.', img: 'https://via.placeholder.com/400x300?text=Air+Duct+Cleaning' },
+                        { name: 'Dryer Vent Cleaning', desc: 'Prevent fire hazards and improve dryer efficiency with professional vent cleaning.', img: 'https://via.placeholder.com/400x300?text=Dryer+Vent+Cleaning' },
+                        { name: 'HVAC Maintenance', desc: 'Keep your HVAC system running smoothly with regular maintenance.', img: 'https://via.placeholder.com/400x300?text=HVAC+Maintenance' },
+                        { name: 'Indoor Air Quality Testing', desc: 'Assess and improve the air quality in your home or office.', img: 'https://via.placeholder.com/400x300?text=Air+Quality+Testing' },
                     ].map((service) => (
-                        <div key={service.name} className="bg-white p-4 rounded shadow">
-                            <img src={service.img} alt={service.name} className="w-full h-48 object-cover rounded" />
-                            <h3 className="text-xl font-bold mt-2">{service.name}</h3>
-                            <p>{service.desc}</p>
+                        <div key={service.name} className="service-card">
+                            <div className="content">
+                                <h3 className="text-2xl font-bold mb-2">{service.name}</h3>
+                                <p className="text-gray-600 mb-4">{service.desc}</p>
+                            </div>
+                            <img src={service.img} alt={service.name} />
                         </div>
                     ))}
                 </div>
@@ -118,26 +213,62 @@
             ];
 
             return (
-                <section id="store" className="p-8">
-                    <h2 className="text-3xl font-bold mb-4">Store</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <section id="store" className="store-bg">
+                    <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">Store</h2>
+                    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
                         {items.map((item) => (
-                            <div key={item.name} className="bg-white p-4 rounded shadow">
-                                <img src={item.img} alt={item.name} className="w-full h-48 object-cover rounded" />
-                                <h3 className="text-xl font-bold mt-2">{item.name}</h3>
-                                <p>{item.desc}</p>
-                                <p className="font-bold">${item.price}</p>
-                                <button onClick={() => addToCart(item)} className="bg-blue-500 text-white px-4 py-2 mt-2 rounded">Add to Cart</button>
+                            <div key={item.name} className="store-item">
+                                <img src={item.img} alt={item.name} className="mb-4" />
+                                <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+                                <p className="text-gray-600 mb-2">{item.desc}</p>
+                                <p className="font-bold text-gray-800 mb-2">${item.price}</p>
+                                <button onClick={() => addToCart(item)} className="btn-primary w-full">Add to Cart</button>
                             </div>
                         ))}
                     </div>
                     {cart.length > 0 && (
-                        <div className="mt-8 p-4 bg-gray-100 rounded">
-                            <h3 className="text-xl font-bold">Checkout</h3>
-                            <input type="text" placeholder="Card Number" className="border p-2 mb-2 w-full" />
-                            <input type="text" placeholder="Expiration Date" className="border p-2 mb-2 w-full" />
-                            <input type="text" placeholder="CVV" className="border p-2 mb-2 w-full" />
-                            <button className="bg-green-500 text-white px-4 py-2 rounded">Pay Now</button>
+                        <div className="max-w-6xl mx-auto mt-8 checkout">
+                            <h3 className="text-2xl font-bold mb-4 text-gray-800">Checkout</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <input type="text" placeholder="First name *" className="border p-2 mb-2 w-full" />
+                                    <input type="text" placeholder="Last name *" className="border p-2 mb-2 w-full" />
+                                    <select className="border p-2 mb-2 w-full">
+                                        <option value="US">United States (US)</option>
+                                    </select>
+                                    <input type="text" placeholder="House number and street name *" className="border p-2 mb-2 w-full" />
+                                    <input type="text" placeholder="Apartment, suite, unit, etc. (optional)" className="border p-2 mb-2 w-full" />
+                                    <input type="text" placeholder="Town / City *" className="border p-2 mb-2 w-full" />
+                                    <select className="border p-2 mb-2 w-full">
+                                        <option value="CA">California</option>
+                                    </select>
+                                    <input type="text" placeholder="ZIP Code *" className="border p-2 mb-2 w-full" />
+                                </div>
+                                <div>
+                                    <h4 className="text-lg font-bold mb-2">Your Order</h4>
+                                    {cart.map((item, index) => (
+                                        <div key={index} className="flex justify-between mb-2">
+                                            <span>{item.name}</span>
+                                            <span>${item.price}</span>
+                                        </div>
+                                    ))}
+                                    <div className="flex justify-between font-bold mt-4">
+                                        <span>Subtotal:</span>
+                                        <span>${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between font-bold mt-2">
+                                        <span>Total:</span>
+                                        <span>${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
+                                    </div>
+                                    <div className="mt-4">
+                                        <p>Pay securely using your credit card.</p>
+                                        <input type="text" placeholder="Card Number *" className="border p-2 mb-2 w-full" />
+                                        <input type="text" placeholder="Expiration Date *" className="border p-2 mb-2 w-full" />
+                                        <input type="text" placeholder="Card Security Code *" className="border p-2 mb-2 w-full" />
+                                    </div>
+                                    <button className="bg-green-500 text-white px-4 py-2 mt-4 rounded w-full">Pay Now</button>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </section>
@@ -145,18 +276,25 @@
         };
 
         const Reviews = () => (
-            <section id="reviews" className="p-8 bg-gray-100">
-                <h2 className="text-3xl font-bold mb-4">Customer Reviews</h2>
-                <div className="space-y-4">
+            <section id="reviews" className="review-bg">
+                <h2 className="text-4xl font-bold mb-6 text-gray-800 text-center">What Our Customers Say</h2>
+                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[
-                        { name: 'John Doe', review: 'Amazing service! My air ducts were cleaned thoroughly, and I noticed a huge difference in air quality.' },
-                        { name: 'Jane Smith', review: 'The team was professional and quick. Highly recommend their dryer vent cleaning!' },
-                        { name: 'Mike Johnson', review: 'Great experience with Bai Global LLC. My HVAC system is running better than ever.' },
-                        { name: 'Sarah Williams', review: 'Their air quality testing helped us identify issues we didn’t even know we had!' },
+                        { name: 'Daniel W.', review: 'Outstanding service! They efficiently cleaned and sanitized all our vents, removing all dust and dirt. Their attention to detail was impressive. I definitely recommend them to anyone needing duct cleaning.' },
+                        { name: 'Emily R.', review: 'Suidui Air Care did an amazing job cleaning our air ducts! The technicians were punctual, professional, and thorough. They left the air in our home noticeably fresher, and the difference was immediately noticeable. Highly recommend!' },
+                        { name: 'David Brown', review: 'I was extremely pleased with the professionalism and expertise of Suidui Air Care technicians. They cleaned our vents and furnace thoroughly and even resolved an unexpected issue with our heating system promptly. Fantastic experience!' },
                     ].map((review) => (
-                        <div key={review.name} className="bg-white p-4 rounded shadow">
-                            <p className="font-bold">{review.name}</p>
-                            <p>{review.review}</p>
+                        <div key={review.name} className="review-card">
+                            <div className="flex items-center mb-4">
+                                <img src="https://via.placeholder.com/40?text=User" alt={review.name} className="mr-2" />
+                                <div>
+                                    <p className="font-bold">{review.name}</p>
+                                    <div className="flex text-yellow-500">
+                                        {[...Array(5)].map((_, i) => <span key={i}>★</span>)}
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="text-gray-600">{review.review}</p>
                         </div>
                     ))}
                 </div>
@@ -164,31 +302,32 @@
         );
 
         const Contact = () => (
-            <section id="contact" className="p-8">
-                <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-                <div className="flex flex-col md:flex-row">
-                    <div className="md:w-1/2">
-                        <p><strong>Address:</strong> 2159 Hart St, North Hollywood, CA 91605</p>
-                        <p><strong>Phone:</strong> (213) 876-3486</p>
+            <section id="contact" className="p-12 bg-gray-100">
+                <h2 className="text-5xl font-bold mb-8 text-gray-800 text-center">Reach Out to Us</h2>
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+                    <div className="contact-info">
+                        <p className="text-xl"><strong className="text-gray-800">Address:</strong> 2159 Hart St, North Hollywood, CA 91605</p>
+                        <p className="text-xl mt-4"><strong className="text-gray-800">Email:</strong> info@baiglobal.com</p>
+                        <p className="text-xl mt-4"><strong className="text-gray-800">Phone:</strong> (213) 876-3486</p>
                     </div>
-                    <div className="md:w-1/2 mt-4 md:mt-0">
-                        <input type="text" placeholder="Name" className="border p-2 mb-2 w-full" />
-                        <input type="text" placeholder="Phone Number" className="border p-2 mb-2 w-full" />
-                        <textarea placeholder="Message" className="border p-2 mb-2 w-full"></textarea>
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+                    <div className="contact-form md:w-1/2">
+                        <input type="text" placeholder="Name *" className="border p-3 mb-4 w-full text-lg" />
+                        <input type="text" placeholder="Email *" className="border p-3 mb-4 w-full text-lg" />
+                        <textarea placeholder="Message *" className="border p-3 mb-4 w-full h-40 text-lg"></textarea>
+                        <button className="btn-primary w-full py-3 text-lg">Send Message</button>
                     </div>
                 </div>
             </section>
         );
 
         const Footer = () => (
-            <footer className="bg-gray-800 text-white p-4 text-center">
-                <div className="flex justify-center space-x-4">
-                    <a href="#privacy" className="hover:text-gray-300">Privacy Policy</a>
-                    <a href="#return" className="hover:text-gray-300">Return Policy</a>
-                    <a href="#terms" className="hover:text-gray-300">Terms and Conditions</a>
+            <footer className="bg-gray-900 text-white p-6 text-center">
+                <div className="flex justify-center space-x-6">
+                    <a href="/privacy" className="hover:text-gray-300 text-lg">Privacy Policy</a>
+                    <a href="/return" className="hover:text-gray-300 text-lg">Return Policy</a>
+                    <a href="/terms" className="hover:text-gray-300 text-lg">Terms and Conditions</a>
                 </div>
-                <p className="mt-2">&copy; 2025 Bai Global LLC. All rights reserved.</p>
+                <p className="mt-4 text-lg">© 2025 Bai Global LLC. All rights reserved.</p>
             </footer>
         );
 
