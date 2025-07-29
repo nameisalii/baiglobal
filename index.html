@@ -37,10 +37,26 @@
             padding: 12px 24px;
             border-radius: 8px;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .btn-primary:hover {
             background-color: #1565c0;
+            transform: scale(1.05);
+        }
+        .btn-add-to-cart {
+            background-color: #1976d2;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .btn-add-to-cart:hover {
+            background-color: #1565c0;
+            transform: scale(1.05);
         }
         .service-card, .store-item, .review-card {
             background: white;
@@ -161,14 +177,11 @@
             return (
                 <nav className="bg-gray-900 text-white p-4 flex justify-between items-center fixed w-full z-10">
                     <div className="text-xl font-bold">Bai Global LLC</div>
-                    <div className="flex space-x-4">
+                    <div className="flex space-x-4 items-center">
                         {['Home', 'About', 'Store', 'Services', 'Reviews', 'Contact'].map((section) => (
                             <a key={section} href={`#${section.toLowerCase()}`} className="hover:text-gray-300">{section}</a>
                         ))}
-                    </div>
-                    <div className="flex space-x-4">
                         <a href="https://bai-global.foxycart.com/cart?cart=view" className="text-white hover:text-gray-300">View Cart</a>
-                        <button onClick={() => setIsBookingOpen(true)} className="btn-primary">Book Now</button>
                     </div>
                     {isBookingOpen && (
                         <div className="booking-modal">
@@ -193,7 +206,6 @@
                 <div className="text-center p-4">
                     <h1 className="text-5xl font-bold text-gray-800">Air Duct Cleaning and Indoor Air Quality Solutions</h1>
                     <p className="text-lg mt-4 text-gray-600">Transform your home's air quality with our expert air duct cleaning and innovative purification solutions. Enjoy fresh, clean air all year round.</p>
-                    <button className="btn-primary mt-4">Book Now</button>
                 </div>
                 <div className="mt-4">
                     <img src="https://transform.octanecdn.com/width/1600/https://octanecdn.com/zrengine/zrengine_466696223.jpg" alt="Air Duct Cleaning" className="w-full max-w-md rounded shadow-lg" />
@@ -256,7 +268,7 @@
                                 <p className="font-bold text-gray-800 mb-2">${item.price}</p>
                                 <a
                                     href={`https://bai-global.foxycart.com/cart?name=${encodeURIComponent(item.name)}&price=${item.price}&image=${encodeURIComponent(item.img)}`}
-                                    className="btn-primary w-full fc-item"
+                                    className="btn-add-to-cart w-full fc-item"
                                     data-fc-id={item.name.replace(/\s+/g, '-').toLowerCase()}
                                 >
                                     Add to Cart
