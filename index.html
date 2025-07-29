@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.9/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.foxycart.com/bai-global/loader.js" async defer></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -41,7 +42,7 @@
         .btn-primary:hover {
             background-color: #1565c0;
         }
-        .service-card, .store-item, .review-card, .checkout {
+        .service-card, .store-item, .review-card {
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -66,9 +67,6 @@
             border-radius: 50%;
             margin-right: 10px;
         }
-        .checkout {
-            padding: 20px;
-        }
         .contact-info, .contact-form {
             max-width: 500px;
             padding: 30px;
@@ -76,7 +74,7 @@
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
-        .contact-form input, .contact-form textarea, .checkout input, .checkout textarea {
+        .contact-form input, .contact-form textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -141,22 +139,24 @@
             height: 100px;
             resize: vertical;
         }
+        .foxy-cart {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
         const NavBar = () => {
-            const [cart, setCart] = React.useState([]);
             const [isBookingOpen, setIsBookingOpen] = React.useState(false);
-
-            const addToCart = (item) => {
-                setCart([...cart, item]);
-            };
-
-            const removeFromCart = (indexToRemove) => {
-                setCart(cart.filter((_, index) => index !== indexToRemove));
-            };
 
             return (
                 <nav className="bg-gray-900 text-white p-4 flex justify-between items-center fixed w-full z-10">
@@ -167,18 +167,7 @@
                         ))}
                     </div>
                     <div className="flex space-x-4">
-                        <div className="relative">
-                            {cart.length > 0 && (
-                                <div className="absolute bg-white text-black p-2 rounded shadow-lg right-0 mt-2">
-                                    {cart.map((item, index) => (
-                                        <div key={index} className="flex justify-between items-center mb-2">
-                                            <span>{item.name} - ${item.price}</span>
-                                            <button onClick={() => removeFromCart(index)} className="text-red-500 ml-2">Remove</button>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
+                        <a href="https://bai-global.foxycart.com/cart?cart=view" className="text-white hover:text-gray-300">View Cart</a>
                         <button onClick={() => setIsBookingOpen(true)} className="btn-primary">Book Now</button>
                     </div>
                     {isBookingOpen && (
@@ -246,16 +235,6 @@
         );
 
         const Store = () => {
-            const [cart, setCart] = React.useState([]);
-
-            const addToCart = (item) => {
-                setCart([...cart, item]);
-            };
-
-            const removeFromCart = (indexToRemove) => {
-                setCart(cart.filter((_, index) => index !== indexToRemove));
-            };
-
             const items = [
                 { name: 'Air Purifier', desc: 'High-efficiency air purifier for cleaner indoor air.', price: 199.99, img: 'https://i5.walmartimages.com/seo/ALROCKET-Air-Purifier-with-HEPA-Filter-for-Home-Remove-99-9-Smoke-Dust-Allergies-for-300-SQ-ft_e8111fa1-f2a9-4c0d-9f9c-4f5399c352da.f659bd27a28fbf490c24cd07e6d208c1.jpeg' },
                 { name: 'HEPA Filter', desc: 'Replacement HEPA filter for air purifiers.', price: 49.99, img: 'https://www.airtecnics.com/media/webstructure/news/filtre-hepa-en.jpg' },
@@ -275,55 +254,16 @@
                                 <h3 className="text-xl font-bold mb-2">{item.name}</h3>
                                 <p className="text-gray-600 mb-2">{item.desc}</p>
                                 <p className="font-bold text-gray-800 mb-2">${item.price}</p>
-                                <button onClick={() => addToCart(item)} className="btn-primary w-full">Add to Cart</button>
+                                <a
+                                    href={`https://bai-global.foxycart.com/cart?name=${encodeURIComponent(item.name)}&price=${item.price}&image=${encodeURIComponent(item.img)}`}
+                                    className="btn-primary w-full fc-item"
+                                    data-fc-id={item.name.replace(/\s+/g, '-').toLowerCase()}
+                                >
+                                    Add to Cart
+                                </a>
                             </div>
                         ))}
                     </div>
-                    {cart.length > 0 && (
-                        <div className="max-w-6xl mx-auto mt-8 checkout">
-                            <h3 className="text-2xl font-bold mb-4 text-gray-800">Checkout</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <input type="text" placeholder="First name *" className="border p-2 mb-2 w-full" />
-                                    <input type="text" placeholder="Last name *" className="border p-2 mb-2 w-full" />
-                                    <select className="border p-2 mb-2 w-full">
-                                        <option value="US">United States (US)</option>
-                                    </select>
-                                    <input type="text" placeholder="House number and street name *" className="border p-2 mb-2 w-full" />
-                                    <input type="text" placeholder="Apartment, suite, unit, etc. (optional)" className="border p-2 mb-2 w-full" />
-                                    <input type="text" placeholder="Town / City *" className="border p-2 mb-2 w-full" />
-                                    <select className="border p-2 mb-2 w-full">
-                                        <option value="CA">California</option>
-                                    </select>
-                                    <input type="text" placeholder="ZIP Code *" className="border p-2 mb-2 w-full" />
-                                </div>
-                                <div>
-                                    <h4 className="text-lg font-bold mb-2">Your Order</h4>
-                                    {cart.map((item, index) => (
-                                        <div key={index} className="flex justify-between items-center mb-2">
-                                            <span>{item.name} - ${item.price}</span>
-                                            <button onClick={() => removeFromCart(index)} className="text-red-500 ml-2">Remove</button>
-                                        </div>
-                                    ))}
-                                    <div className="flex justify-between font-bold mt-4">
-                                        <span>Subtotal:</span>
-                                        <span>${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between font-bold mt-2">
-                                        <span>Total:</span>
-                                        <span>${cart.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
-                                    </div>
-                                    <div className="mt-4">
-                                        <p>Pay securely using your credit card.</p>
-                                        <input type="text" placeholder="Card Number *" className="border p-2 mb-2 w-full" />
-                                        <input type="text" placeholder="Expiration Date *" className="border p-2 mb-2 w-full" />
-                                        <input type="text" placeholder="Card Security Code *" className="border p-2 mb-2 w-full" />
-                                    </div>
-                                    <button className="bg-green-500 text-white px-4 py-2 mt-4 rounded w-full">Pay Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 </section>
             );
         };
