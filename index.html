@@ -15,7 +15,7 @@
             color: #1a2e5e;
             background-color: #f9f9f9;
         }
-        .header-bg, .service-bg, .store-bg, .review-bg {
+        .header-bg, .service-bg, .store-bg, .review-bg, .payment-policy-bg {
             padding: 40px 20px;
             text-align: center;
         }
@@ -30,6 +30,9 @@
         }
         .review-bg {
             background: #e8eaf6;
+        }
+        .payment-policy-bg {
+            background: #ffffff;
         }
         .btn-primary {
             background-color: #1976d2;
@@ -166,6 +169,40 @@
             padding: 20px;
             z-index: 1000;
         }
+        .payment-logos img {
+            width: 60px;
+            height: auto;
+            margin: 0 10px;
+        }
+        .payment-policies {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .payment-policies h3 {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a2e5e;
+        }
+        .payment-policies p {
+            font-size: 1em;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 640px) {
+            .payment-logos img {
+                width: 50px;
+                margin: 0 5px;
+            }
+            .payment-policies {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -280,6 +317,26 @@
             );
         };
 
+        const PaymentPolicies = () => (
+            <section id="payment-policies" className="payment-policy-bg">
+                <h2 className="text-4xl font-bold mb-6 text-gray-800">Payment Methods & Policies</h2>
+                <div className="payment-logos flex justify-center space-x-4 mb-6">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPGdU75jrLM-1gr9ZiSwsx6fVbaqUZK1S3XA&s" alt="Visa" />
+                    <img src="https://www.investopedia.com/thmb/F8CKM3YkF1fmnRCU2g4knuK0eDY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/MClogo-c823e495c5cf455c89ddfb0e17fc7978.jpg" alt="Mastercard" />
+                    <img src="https://sm.pcmag.com/pcmag_me/review/c/cash-app/cash-app_m9qz.jpg" alt="Cash App" />
+                    <img src="https://www.privatebank.bankofamerica.com/content/dam/ML/solutions/redesign/credit-cards/bofa_trvsigcm_v.png" alt="Credit/Debit Card" />
+                </div>
+                <div className="payment-policies">
+                    <h3>Refund Policy</h3>
+                    <p>We offer a 30-day refund policy for all products purchased from our store. Items must be unused, in their original packaging, and returned with proof of purchase. Refunds are processed within 10 business days upon receipt of the returned item. Shipping costs are non-refundable. Contact us at (818) 747-4036 or info@baiglobal.com for assistance.</p>
+                    <h3>Cancellation Policy</h3>
+                    <p>Orders can be canceled within 24 hours of purchase for a full refund. For service bookings, cancellations must be made at least 48 hours before the scheduled appointment to avoid a cancellation fee. To cancel, contact us at (818) 747-4036 or info@baiglobal.com. A confirmation email will be sent upon cancellation.</p>
+                    <h3>Privacy Policy</h3>
+                    <p>At Bai Global LLC, we collect only the personal information necessary to process your orders and improve our services, such as your name, email, and payment details. We do not share your data with third parties except as required by law or to fulfill service obligations. You can review or request deletion of your data by contacting info@baiglobal.com.</p>
+                </div>
+            </section>
+        );
+
         const Reviews = () => (
             <section id="reviews" className="review-bg">
                 <h2 className="text-4xl font-bold mb-6 text-gray-800">What Our Customers Say</h2>
@@ -383,6 +440,7 @@
                 <About />
                 <Services />
                 <Store />
+                <PaymentPolicies />
                 <Reviews />
                 <Contact />
                 <Footer />
